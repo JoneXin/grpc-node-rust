@@ -41,12 +41,40 @@
 > 3, 进程间通信（windows 管道是一种轻量级的通信方式，不必建立在HTTP2.0上）
 
 
-## 五，GRPC 案例 模板
+## 目录结构
 
-### 1，GRPC node 客户端服务端模板
+```text
+grpc-node-rust
+ ├─ grpc-node // node 客户端 服务端案例
+ │ ├─ dist
+ │ ├─ src
+ │ │ ├─ client
+ │ │ │ └─ app.ts
+ │ │ └─ server
+ │ │ │ └─ app.ts
+ │ ├─ package.json
+ │ └─ tsconfig.json
+ ├─ grpc-rust  // rust 客户端  服务端案例
+ │ ├─ client
+ │ │ ├─ src
+ │ │ │ └─ main.rs
+ │ │ ├─ build.rs
+ │ │ └─ Cargo.toml
+ │ └─ server
+ │ │ ├─ src
+ │ │ │ └─ main.rs
+ │ │ ├─ build.rs
+ │ │ └─ Cargo.toml
+ └─ protos
+ │ └─ voting.proto
 
+```
 
-### 2，GRPC rust 客户端服务端模板
+## 运行方式(node-clinet & rust-server):
 
+```js
+cd grpc-node & npm run client
 
-### 3，GRPC node 客户端 调用 rust 服务端模板
+cd grpc-rust/server &  cargo run
+
+```

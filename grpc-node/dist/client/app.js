@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
@@ -10,11 +11,13 @@ const options = {
     defaults: true,
     oneofs: true,
 };
-var packageDefinition = protoLoader.loadSync(path.join(__dirname, '../../news.proto'), options);
-const NewsService = grpc.loadPackageDefinition(packageDefinition).NewsService;
-const client = new NewsService('127.0.0.1:50051', grpc.credentials.createInsecure());
+var packageDefinition = protoLoader.loadSync(path.join(__dirname, '../../../protos/voting.proto'), options);
+const packageName = (_a = grpc.loadPackageDefinition(packageDefinition)) === null || _a === void 0 ? void 0 : _a.voting;
+const VotingService = packageName.Voting;
+console.log(VotingService);
+const client = new VotingService('127.0.0.1:8080', grpc.credentials.createInsecure());
 setInterval(() => {
-    client.GetAllNews({ name: '123' }, (error, news) => {
+    client.get_news({ name: '123' }, (error, news) => {
         if (error)
             throw error;
         console.log(news);

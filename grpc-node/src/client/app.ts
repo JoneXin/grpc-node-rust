@@ -10,14 +10,17 @@ const options = {
     oneofs: true,
 };
 
-var packageDefinition = protoLoader.loadSync(path.join(__dirname, '../../news.proto'), options);
+var packageDefinition = protoLoader.loadSync(path.join(__dirname, '../../../protos/voting.proto'), options);
 
-const NewsService: any = grpc.loadPackageDefinition(packageDefinition).NewsService;
+const packageName: any = grpc.loadPackageDefinition(packageDefinition)?.voting;
 
-const client = new NewsService('127.0.0.1:50051', grpc.credentials.createInsecure());
+const VotingService: any = packageName.Voting;
+console.log(VotingService);
+
+const client = new VotingService('127.0.0.1:8080', grpc.credentials.createInsecure());
 
 setInterval(() => {
-    client.GetAllNews({ name: '123' }, (error, news) => {
+    client.get_news({ name: '123' }, (error, news) => {
         if (error) throw error;
         console.log(news);
     });

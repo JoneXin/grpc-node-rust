@@ -1,5 +1,12 @@
 syntax = "proto3";
 
+package voting;
+
+service Voting {
+  rpc Vote(VotingRequest) returns (VotingResponse);
+  rpc get_news(Info) returns (News) {};
+}
+
 // 定义消息
 /*
   编号规则: 用于在 消息二进制格式中标识您的字段
@@ -15,7 +22,7 @@ message News {
   string id = 1;
   string title = 2;
   string body = 3;
-  string postImage = 4;
+  string post_image = 4;
   repeated int32 age = 5;
 }
 
@@ -23,16 +30,23 @@ message News {
 // optional: 与 相同singular，不同之处在于您可以检查该值是否已显式设置
 // singular：一个格式良好的消息可以有零个或一个这个字段（但不能超过一个）
 // repeated 段类型可以在格式良好的消息中重复零次或多次。重复值的顺序将被保留
-message Empty { string name = 1; }
+message VotingRequest {
+  string url = 1;
+  Vote vote = 2;
+}
 
 // reserved 保留字段
 // message Foo {
 //   reserved 2, 15, 9 to 11;
 //   reserved "foo", "bar";
 // }
+message VotingResponse { string confirmation = 1; }
+
+message Info { string name = 1; }
 
 message NewsList { repeated News news = 1; }
 
-service NewsService {
-  rpc GetAllNews(Empty) returns (News) {}
+enum Vote {
+  UP = 0;
+  DOWN = 1;
 }
